@@ -33,7 +33,7 @@ public class GPSTracker implements LocationListener{
 
         //Schritt1
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
         if (isGPSEnabled) {
             //Fehlerbehandulung siehe Schritt2
