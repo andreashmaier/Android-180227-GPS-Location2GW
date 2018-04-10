@@ -14,46 +14,44 @@ import android.widget.Toast;
  * Created by guenther on 27.02.18.
  */
 
-public class GPSTracker implements LocationListener{
+public class GPSTracker implements LocationListener {
 
     Context context;
 
-    public GPSTracker(Context context){
+    public GPSTracker(Context context) {
         this.context = context;
     }
 
 
+    public Location getLocation() {
 
-    public Location getLocation(){
-
-        //Schritt2
+        //Schritt 1 - Berechtigungen überprüfen (Determine whether you have been granted a particular permission)
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(context,"Berechtigung nicht erteilt",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Berechtigung nicht erteilt", Toast.LENGTH_SHORT).show();
         }
 
-        //Schritt1
+
+        //Schritt 2 - LocationManager erstellen
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
+
+        //Schritt 3 - Prüfen ob GPS am Geräte aktiviert und Location Object erstellen
         boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
         if (isGPSEnabled) {
-            //Fehlerbehandulung siehe Schritt2
-
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,6000,10,this);
-
-            //Schritt 3
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 6000, 10, this);
             Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             return location;
 
-            //zu Schritt1
         } else {
-            Toast.makeText(context,"Bitte GPS aktivieren",Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Bitte GPS aktivieren", Toast.LENGTH_LONG).show();
         }
         return null;
     }
 
     @Override
     public void onLocationChanged(Location location) {
-
+        MainActivity.onLocationChanged();
     }
 
     @Override
@@ -63,14 +61,13 @@ public class GPSTracker implements LocationListener{
 
     @Override
     public void onProviderEnabled(String s) {
-
+        MainActivity.onProviderEnabled();
     }
 
     @Override
     public void onProviderDisabled(String s) {
-
+        MainActivity.onProviderDisabled();
     }
-
 
 
 }
