@@ -73,5 +73,4 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "test Provider enabled");
     }
 
-
 }
